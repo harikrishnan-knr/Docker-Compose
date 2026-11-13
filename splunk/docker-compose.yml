@@ -1,0 +1,26 @@
+
+services:
+  splunk:
+    image: splunk/splunk:latest
+    container_name: splunk
+    hostname: splunk
+    restart: unless-stopped
+
+    environment:
+      SPLUNK_START_ARGS: --accept-license
+      SPLUNK_PASSWORD: "password"
+
+    ports:
+      - "8000:8000"   # Splunk Web UI
+      - "8088:8088"   # HTTP Event Collector (HEC)
+      - "8089:8089"   # Management API
+      - "9997:9997"   # Forwarder receiving port
+
+    volumes:
+      - splunk_etc:/opt/splunk/etc
+      - splunk_var:/opt/splunk/var
+
+volumes:
+  splunk_etc:
+  splunk_var:
+
